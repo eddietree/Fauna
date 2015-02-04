@@ -61,6 +61,11 @@ public class Polyball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetMouseButtonDown (0)) {
+			transform.Rotate (10.0f, 0.0f, 0.0f);
+		}
+
+
 		transform.Rotate (1.0f, 0.0f, 0.0f);
 	}
 }
