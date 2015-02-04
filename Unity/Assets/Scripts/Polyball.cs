@@ -32,10 +32,10 @@ public class Polyball : MonoBehaviour {
 
 		HSBColor baseColor = new HSBColor (new Color (243.0f/255.0f, 225/255.0f, 93.0f/255.0f));
 
-		int numSteps = 4;
-		baseColor.h += Random.Range (0, numSteps) / (float)(numSteps) + Random.Range (-0.05f,0.05f);
-		baseColor.s = Random.Range (0.75f, 0.9f);
-		baseColor.b = Random.Range (0.8f, 1.0f);
+		int numSteps = 2;
+		baseColor.h += Random.Range (0, numSteps) / (float)(numSteps);// + Random.Range (-0.05f,0.05f);
+		baseColor.s = Random.Range(0,3)==0 ? Random.Range (0.2f, 0.4f) : Random.Range (0.75f, 0.9f);
+		baseColor.b = Random.Range(0,5)==0 ? Random.Range (0.2f, 0.4f) : Random.Range (0.8f, 1.0f);
 
 		Color32 finalColor = baseColor.ToColor();
 		return finalColor;

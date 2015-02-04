@@ -59,6 +59,9 @@ public class InputRotator : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		HandleRotationInput ();
+
+		
+		print (rigidbody.angularVelocity.magnitude);
 	}
 
 	void OnMouseDown() {
@@ -80,7 +83,7 @@ public class InputRotator : MonoBehaviour {
 		Vector3 force = Vector3.right * aRelativePos.y - Vector3.up * aRelativePos.x;
 		
 		//rigidbody.rotation
-		float speed = 400.0f;
+		float speed = 600.0f;
 		rigidbody.AddTorque( force * speed );
 	}
 }
