@@ -13,7 +13,7 @@ public class Polyball : MonoBehaviour {
 	Vector3 GetRandomSpherePos()
 	{
 		int numTheta = 6;
-		int numPhi = 4;
+		int numPhi = 5;
 
 		float deltaTheta = 2.0f * Mathf.PI / numTheta;
 		float deltaPhi = Mathf.PI / numPhi;
@@ -59,6 +59,12 @@ public class Polyball : MonoBehaviour {
 			vertsColor[0+indexOffset] = color;
 			vertsColor[1+indexOffset] = color;
 			vertsColor[2+indexOffset] = color;
+
+			float randNum0 = Random.Range(0.0f,1.0f);
+			float randNum1 = Random.Range(0.0f,1.0f);
+			vertsUV[0+indexOffset] = new Vector2( randNum0, randNum1 );
+			vertsUV[1+indexOffset] = new Vector2( randNum0, randNum1 );
+			vertsUV[2+indexOffset] = new Vector2( randNum0, randNum1 );
 
 			vertsIndices[0+indexOffset] = indexOffset+0;
 			vertsIndices[1+indexOffset] = indexOffset+1;
