@@ -1,6 +1,7 @@
 ﻿ Shader "Custom/Polyball" {
         SubShader {
             Pass {
+            	Cull Off
 
     CGPROGRAM
 

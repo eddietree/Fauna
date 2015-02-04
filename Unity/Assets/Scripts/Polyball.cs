@@ -5,45 +5,53 @@ public class Polyball : MonoBehaviour {
 
 	private Vector3[] vertsPos;
 	private Vector2[] vertsUV;
-	private int[] vertIndices;
-	private Color32[] vertColors;
+	private int[] vertsIndices;
+	private Color32[] vertsColor;
 
 	void CreateMesh() {
 		Mesh mesh = new Mesh ();
 		GetComponent<MeshFilter> ().mesh = mesh;
 
-		const int numVerts = 3;
+		const int numFaces = 6;
+		const int numVertsPerFace = 3;
+		const int numVerts = numFaces * numVertsPerFace;
+
 		vertsPos = new Vector3[numVerts];
 		vertsUV = new Vector2[numVerts];
-		vertIndices = new int[numVerts];
-		vertColors = new Color32[numVerts];
+		vertsIndices = new int[numVerts];
+		vertsColor = new Color32[numVerts];
 
-		vertsPos[0] = new Vector3 (0.0f, 0.0f, 0.0f);
-		vertsPos[1] = new Vector3 (2.0f, 0.0f, 0.0f);
-		vertsPos[2] = new Vector3 (-2.0f, 5.0f, 3.0f);
+		for (int i = 0; i < numFaces; i++) {
 
-		vertsUV[0] = new Vector2 (0.0f, 0.0f);
-		vertsUV[1] = new Vector2 (2.0f, 1.0f);
-		vertsUV[2] = new Vector2 (-2.0f, 5.0f);
+			int indexOffset = i * numVertsPerFace;
+			float radius = 1.0f;
 
-		vertColors [0] = new Color32 (255, 0, 0, 255);
-		vertColors [1] = new Color32 (255, 255, 0, 255);
-		vertColors [2] = new Color32 (255, 0, 255, 255);
+			Color32 color = new Color32( (byte)(Random.Range(0,255)), (byte)(Random.Range(0,255)), (byte)(Random.Range(0,255)), 255 );
 
-		vertIndices[0] = 0;
-		vertIndices[1] = 2;
-		vertIndices[2] = 1;
+			Vector3 pos0 = Random.onUnitSphere * radius;
+			Vector3 pos1 = Random.onUnitSphere * radius;
+			Vector3 pos2 = -(pos0+pos1)*0.5f; pos2.Normalize(); pos2 *= radius;
+
+			vertsPos[0+indexOffset] = pos0;
+			vertsPos[1+indexOffset] = pos1;
+			vertsPos[2+indexOffset] = pos2;
+
+			vertsColor[0+indexOffset] = color;
+			vertsColor[1+indexOffset] = color;
+			vertsColor[2+indexOffset] = color;
+
+			vertsIndices[0+indexOffset] = indexOffset+0;
+			vertsIndices[1+indexOffset] = indexOffset+1;
+			vertsIndices[2+indexOffset] = indexOffset+2;
+		}
 
 		mesh.vertices = vertsPos;
 		mesh.uv = vertsUV;
-		mesh.triangles = vertIndices;
-		mesh.colors32 = vertColors;
+		mesh.triangles = vertsIndices;
+		mesh.colors32 = vertsColor;
 
 		mesh.RecalculateBounds ();
-		mesh.RecalculateNormals ();
-
-		//renderer.material = new Material (Shader.Find ("Diffuse"));
-	
+		mesh.RecalculateNormals ();	
 	}
 
 	// Use this for initialization
@@ -53,6 +61,6 @@ public class Polyball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		transform.Rotate (1.0f, 0.0f, 0.0f);
 	}
 }
