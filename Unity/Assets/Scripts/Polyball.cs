@@ -8,8 +8,6 @@ public class Polyball : MonoBehaviour {
 	private int[] vertsIndices;
 	private Color32[] vertsColor;
 
-	private Vector2 mousePosPrev;
-
 	Vector3 GetRandomSpherePos()
 	{
 		int numTheta = 6;
@@ -26,6 +24,21 @@ public class Polyball : MonoBehaviour {
 		float z = radius * Mathf.Cos ( theta );
 
 		return new Vector3 (x, y, z);
+	}
+
+	Color32 GetFaceColor(int aFace) {
+		//Color32 color = new Color32( (byte)(Random.Range(0,255)), (byte)(Random.Range(0,255)), (byte)(Random.Range(0,255)), 255 );
+
+
+		HSBColor baseColor = new HSBColor (new Color (243.0f/255.0f, 225/255.0f, 93.0f/255.0f));
+
+		int numSteps = 4;
+		baseColor.h += Random.Range (0, numSteps) / (float)(numSteps) + Random.Range (-0.05f,0.05f);
+		baseColor.s = Random.Range (0.75f, 0.9f);
+		baseColor.b = Random.Range (0.8f, 1.0f);
+
+		Color32 finalColor = baseColor.ToColor();
+		return finalColor;
 	}
 
 	void CreateMesh() {
@@ -45,7 +58,7 @@ public class Polyball : MonoBehaviour {
 
 			int indexOffset = i * numVertsPerFace;
 
-			Color32 color = new Color32( (byte)(Random.Range(0,255)), (byte)(Random.Range(0,255)), (byte)(Random.Range(0,255)), 255 );
+			Color32 color = GetFaceColor(i);
 
 			Vector3 pos0 = GetRandomSpherePos();
 			Vector3 pos1 = GetRandomSpherePos();
@@ -80,72 +93,18 @@ public class Polyball : MonoBehaviour {
 		mesh.RecalculateNormals ();	
 	}
 
+	void Update() {
+		transform.localScale = Vector3.Lerp (transform.localScale, Vector3.one, 0.1f);
+	}
+
+	public void OnClick() {
+
+		transform.localScale *= 1.5f;
+	}
+
 	// Use this for initialization
 	void Start () {
-
-		mousePosPrev = new Vector2 (0.0f, 0.0f);
 		CreateMesh ();
 	}
 
-	void OnTouchStart( Vector2 aPos ) {
-		rigidbody.angularVelocity = Vector3.zero;
-	}
-
-	void OnTouchEnd( Vector2 aPos, Vector2 aRelativePos ) {
-	}
-
-	void OnTouchMove( Vector2 aPos, Vector2 aRelativePos ) {
-	
-		Vector3 force = Vector3.right * aRelativePos.y - Vector3.up * aRelativePos.x;
-		
-		//rigidbody.rotation
-		float speed = 400.0f;
-		rigidbody.AddTorque( force * speed );
-	}
-
-	void HandleRotationInput()
-	{
-		//if (Input.GetMouseButton (0)) {
-		if (Input.touchCount > 0) {
-			Touch touch = Input.GetTouch (0);
-			
-			if (touch.phase == TouchPhase.Began) {
-				OnTouchStart (touch.position);
-
-			} else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary) {
-				OnTouchMove (touch.position, touch.deltaPosition);
-				
-			} else if (touch.phase == TouchPhase.Ended) {
-				OnTouchEnd (touch.position, touch.deltaPosition);
-			}
-		} else {
-
-			Vector3 inputMousePos = Input.mousePosition;
-			Vector2 mousePosCurr = new Vector2( inputMousePos.x, inputMousePos.y );
-			Vector2 mousePosRel = mousePosCurr - mousePosPrev;
-
-			if ( Input.GetMouseButtonDown(0) )
-			{
-				OnTouchStart ( mousePosCurr );
-
-			}
-			else if ( Input.GetMouseButtonUp(0) )
-			{
-				OnTouchEnd( mousePosCurr, mousePosRel );
-			}
-			else if ( Input.GetMouseButton(0) )
-			{
-				OnTouchMove( mousePosCurr, mousePosRel );
-			}
-
-			mousePosPrev = mousePosCurr;
-		}
-		
-		//transform.Rotate (1.0f, 0.0f, 0.0f);
-	}
-
-	// Update is called once per frame
-	void FixedUpdate () {
-		HandleRotationInput ();
-	}
 }

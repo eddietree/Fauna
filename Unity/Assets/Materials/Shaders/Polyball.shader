@@ -43,10 +43,10 @@
 	// fragment shader
     float4 frag (v2f i) : COLOR
     {
-    	if ( i.uv.x < 0.15 )
+    	if ( i.uv.x < 0.1 )
     	{
     		clip( sin(i.worldPos.y * 80.0 ) );
-    		return float4 (0.2,0.2,0.2, 1);
+    		return float4 (1,1,1, 1);
     	}
     		
     	//clip( sin(i.worldPos.y * 20.0) );
