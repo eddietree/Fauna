@@ -10,11 +10,29 @@ public class Polyball : MonoBehaviour {
 
 	private Vector2 mousePosPrev;
 
+	Vector3 GetRandomSpherePos()
+	{
+		int numTheta = 6;
+		int numPhi = 4;
+
+		float deltaTheta = 2.0f * Mathf.PI / numTheta;
+		float deltaPhi = Mathf.PI / numPhi;
+		float theta = Random.Range (0, numTheta) * deltaTheta;
+		float phi = Random.Range (0, numPhi) * deltaPhi - Mathf.PI*0.5f;
+
+		float radius = 1.0f;
+		float x = radius * Mathf.Cos( phi ) * Mathf.Sin ( theta );
+		float y = radius * Mathf.Sin( phi ) * Mathf.Sin ( theta );
+		float z = radius * Mathf.Cos ( theta );
+
+		return new Vector3 (x, y, z);
+	}
+
 	void CreateMesh() {
 		Mesh mesh = new Mesh ();
 		GetComponent<MeshFilter> ().mesh = mesh;
 
-		const int numFaces = 6;
+		const int numFaces = 16;
 		const int numVertsPerFace = 3;
 		const int numVerts = numFaces * numVertsPerFace;
 
@@ -26,13 +44,13 @@ public class Polyball : MonoBehaviour {
 		for (int i = 0; i < numFaces; i++) {
 
 			int indexOffset = i * numVertsPerFace;
-			float radius = 1.0f;
 
 			Color32 color = new Color32( (byte)(Random.Range(0,255)), (byte)(Random.Range(0,255)), (byte)(Random.Range(0,255)), 255 );
 
-			Vector3 pos0 = Random.onUnitSphere * radius;
-			Vector3 pos1 = Random.onUnitSphere * radius;
-			Vector3 pos2 = -(pos0+pos1)*0.5f; pos2.Normalize(); pos2 *= radius;
+			Vector3 pos0 = GetRandomSpherePos();
+			Vector3 pos1 = GetRandomSpherePos();
+			Vector3 pos2 = -(pos0+pos1)*0.5f; pos2.Normalize(); pos2 *= pos1.magnitude;
+			//pos2 = GetRandomSpherePos();
 
 			vertsPos[0+indexOffset] = pos0;
 			vertsPos[1+indexOffset] = pos1;
@@ -64,6 +82,7 @@ public class Polyball : MonoBehaviour {
 	}
 
 	void OnTouchStart( Vector2 aPos ) {
+		rigidbody.angularVelocity = Vector3.zero;
 	}
 
 	void OnTouchEnd( Vector2 aPos, Vector2 aRelativePos ) {
@@ -74,7 +93,7 @@ public class Polyball : MonoBehaviour {
 		Vector3 force = Vector3.right * aRelativePos.y - Vector3.up * aRelativePos.x;
 		
 		//rigidbody.rotation
-		float speed = 200.0f;
+		float speed = 400.0f;
 		rigidbody.AddTorque( force * speed );
 	}
 
