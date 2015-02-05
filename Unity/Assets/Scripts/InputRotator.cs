@@ -72,18 +72,37 @@ public class InputRotator : MonoBehaviour {
 	}
 
 	void OnTouchStart( Vector2 aPos ) {
-		rigidbody.angularVelocity = Vector3.zero;
+		//rigidbody.angularVelocity = Vector3.zero;
+		rigidbody.angularDrag = 10.0f;
 	}
 	
 	void OnTouchEnd( Vector2 aPos, Vector2 aRelativePos ) {
+
+		rigidbody.angularDrag = 0.01f;
+
+		Vector3 force = Vector3.right * aRelativePos.y - Vector3.up * aRelativePos.x;
+		
+		//transform.ro
+		//rigidbody.rotation
+		float speed = 600.0f;
+		rigidbody.AddTorque( force * speed );
+
+		//rigidbody.angularVelocity *= 50.0f;
 	}
 	
 	void OnTouchMove( Vector2 aPos, Vector2 aRelativePos ) {
 		
-		Vector3 force = Vector3.right * aRelativePos.y - Vector3.up * aRelativePos.x;
-		
+		Vector3 force = Vector3.right * aRelativePos.y  * Mathf.Abs(aRelativePos.y) - Vector3.up * aRelativePos.x* Mathf.Abs (aRelativePos.x);
+
+		//transform.ro
 		//rigidbody.rotation
-		float speed = 600.0f;
+		float speed = 400.0f;
 		rigidbody.AddTorque( force * speed );
+
+		//transform.Rotate
+		rigidbody.angularVelocity *= 0.98f;
+		rigidbody.angularDrag = Mathf.Lerp( rigidbody.angularDrag, 1.0f, 0.1f );
+
+//		transform.Rotate ( new Vector3(aRelativePos.y, aRelativePos.x,0.0f));
 	}
 }
