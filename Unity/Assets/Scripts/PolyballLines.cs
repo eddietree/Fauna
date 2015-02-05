@@ -14,7 +14,7 @@ public class PolyballLines : MonoBehaviour {
 		Mesh mesh = new Mesh ();
 		GetComponent<MeshFilter> ().mesh = mesh;
 		
-		const int numFaces = 16;
+		const int numFaces = 96;
 		const int numVertsPerFace = 3;
 		const int numVerts = numFaces * numVertsPerFace;
 		
@@ -29,11 +29,13 @@ public class PolyballLines : MonoBehaviour {
 			
 			Color32 color = new Color32(255,255,255,255);
 			
-			Vector3 pos0 = polyball_points.GetRandomSpherePos();
+			/*Vector3 pos0 = polyball_points.GetRandomSpherePos();
 			Vector3 pos1 = polyball_points.GetRandomSpherePos();
 			Vector3 pos2 = polyball_points.GetRandomSpherePos();;//-(pos0+pos1)*0.5f; pos2.Normalize(); pos2 *= pos1.magnitude;
 			//pos2 = GetRandomSpherePos();
-			
+*/
+			Vector3 pos0, pos1, pos2;
+			polyball_points.GetSurroundingTri(out pos0, out pos1, out pos2);
 			vertsPos[0+indexOffset] = pos0;
 			vertsPos[1+indexOffset] = pos1;
 			vertsPos[2+indexOffset] = pos2;

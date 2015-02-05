@@ -16,9 +16,48 @@ public class PolyballPointsManager : MonoBehaviour {
 	
 	}
 
+	public void GetSurroundingTri( out Vector3 aVec0, out Vector3 aVec1, out Vector3 aVec2 ) {
+
+		//swap
+		int randIndex = Random.Range (0, points.Count-1);
+		SwapIndices (0, randIndex);
+
+		for( int kk = 0; kk < 2; kk++ )
+		{
+			int indexMin = 1;
+			float minDistSqr = (points[indexMin] - points [0]).sqrMagnitude;
+
+			for( int i = 2 + kk; i < points.Count; i++ )
+			{
+				float currMinDistSqr = (points [i] - points [0]).sqrMagnitude;
+
+				if ( currMinDistSqr < minDistSqr )
+				{
+					indexMin = i;
+					minDistSqr = currMinDistSqr;
+				}
+			}
+
+			// swap next
+			SwapIndices (1 + kk, indexMin);
+		}
+		
+		aVec0 = points [0];
+		aVec1 = points [1];
+		aVec2 = points [2];
+	}
+
+	private void SwapIndices( int index0, int index1 )
+	{
+		//swap
+		Vector3 temp = points[index0];
+		points[index0] = points[index1];
+		points[index1] = temp;
+	}
+
 	public Vector3 GetRandomSpherePos()
 	{
-		int numTheta = 15;
+		int numTheta = 6;
 		int numPhi = 10;
 		
 		float deltaTheta = 2.0f * Mathf.PI / numTheta;

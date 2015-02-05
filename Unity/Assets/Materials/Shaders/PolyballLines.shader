@@ -1,26 +1,32 @@
-﻿Shader "Custom/PolyballLines" {
-	Properties {
-		_MainTex ("Base (RGB)", 2D) = "white" {}
-	}
-	SubShader {
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		
-		CGPROGRAM
-		#pragma surface surf Lambert
-
-		sampler2D _MainTex;
-
-		struct Input {
-			float2 uv_MainTex;
-		};
-
-		void surf (Input IN, inout SurfaceOutput o) {
-			half4 c = tex2D (_MainTex, IN.uv_MainTex);
-			o.Albedo = c.rgb;
-			o.Alpha = c.a;
-		}
-		ENDCG
-	} 
-	FallBack "Diffuse"
+﻿Shader "Cg shader using blending" {
+   SubShader {
+      Tags { "Queue" = "Transparent" } 
+         // draw after all opaque geometry has been drawn
+      Pass {
+      	Cull Off
+         ZWrite Off // don't write to depth buffer 
+            // in order not to occlude other objects
+ 
+         Blend SrcAlpha OneMinusSrcAlpha // use alpha blending
+ 
+         CGPROGRAM 
+ 
+         #pragma vertex vert 
+         #pragma fragment frag
+ 
+         float4 vert(float4 vertexPos : POSITION) : SV_POSITION 
+         {
+            return mul(UNITY_MATRIX_MVP, vertexPos);
+         }
+ 
+         float4 frag(void) : COLOR 
+         {
+            return float4(1.0, 1.0, 1.0, 0.3); 
+               // the fourth component (alpha) is important: 
+               // this is semitransparent green
+         }
+ 
+         ENDCG  
+      }
+   }
 }
