@@ -61,7 +61,7 @@ public class InputRotator : MonoBehaviour {
 		HandleRotationInput ();
 
 		
-		print (rigidbody.angularVelocity.magnitude);
+		//print (rigidbody.angularVelocity.magnitude);
 	}
 
 	void OnMouseDown() {

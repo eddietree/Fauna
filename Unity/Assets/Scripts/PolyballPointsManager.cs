@@ -7,7 +7,7 @@ public class PolyballPointsManager : MonoBehaviour {
 	private List<Vector3> points;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		points = new List<Vector3>();
 	}
 	
