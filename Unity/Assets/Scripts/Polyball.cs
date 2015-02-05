@@ -8,23 +8,7 @@ public class Polyball : MonoBehaviour {
 	private int[] vertsIndices;
 	private Color32[] vertsColor;
 
-	Vector3 GetRandomSpherePos()
-	{
-		int numTheta = 6;
-		int numPhi = 5;
-
-		float deltaTheta = 2.0f * Mathf.PI / numTheta;
-		float deltaPhi = Mathf.PI / numPhi;
-		float theta = Random.Range (0, numTheta) * deltaTheta;
-		float phi = Random.Range (0, numPhi) * deltaPhi - Mathf.PI*0.5f;
-
-		float radius = 1.0f;
-		float x = radius * Mathf.Cos( phi ) * Mathf.Sin ( theta );
-		float y = radius * Mathf.Sin( phi ) * Mathf.Sin ( theta );
-		float z = radius * Mathf.Cos ( theta );
-
-		return new Vector3 (x, y, z);
-	}
+	public PolyballPointsManager polyball_points;
 
 	Color32 GetFaceColor(int aFace) {
 		//Color32 color = new Color32( (byte)(Random.Range(0,255)), (byte)(Random.Range(0,255)), (byte)(Random.Range(0,255)), 255 );
@@ -60,9 +44,9 @@ public class Polyball : MonoBehaviour {
 
 			Color32 color = GetFaceColor(i);
 
-			Vector3 pos0 = GetRandomSpherePos();
-			Vector3 pos1 = GetRandomSpherePos();
-			Vector3 pos2 = -(pos0+pos1)*0.5f; pos2.Normalize(); pos2 *= pos1.magnitude;
+			Vector3 pos0 = polyball_points.GetRandomSpherePos();
+			Vector3 pos1 = polyball_points.GetRandomSpherePos();
+			Vector3 pos2 = polyball_points.GetRandomSpherePos();;//-(pos0+pos1)*0.5f; pos2.Normalize(); pos2 *= pos1.magnitude;
 			//pos2 = GetRandomSpherePos();
 
 			vertsPos[0+indexOffset] = pos0;
