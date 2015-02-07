@@ -19,7 +19,7 @@ public class Arpeggiator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		nightCoeff = Mathf.Lerp (nightCoeff, goalNightCoeff, 0.06f);
+		nightCoeff = Mathf.Lerp (nightCoeff, goalNightCoeff, 0.07f);
 
 		// bg color
 		Color colorDay = new Color( 243.0f/255.0f, 233.0f/255.0f, 93.0f/255.0f );

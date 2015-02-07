@@ -19,7 +19,7 @@ public class Notes : MonoBehaviour {
 	void Start () {
 		noteIndex = 0;
 		isDay = true;
-		notesPerDayCycle = 8;
+		notesPerDayCycle = 16;
 
 		timeNoteCooldownMax = 2.0f;
 
@@ -58,13 +58,13 @@ public class Notes : MonoBehaviour {
 		int noteIndexMax = noteIndexMin + numNotesPerSet;
 
 		// random
-		int playNoteIndex = Random.Range (noteIndexMin, noteIndexMax);
+		//int playNoteIndex = Random.Range (noteIndexMin, noteIndexMax);
 
 		// linear!
-		//int playNoteIndex = noteIndexMin + noteIndex % numNotesPerSet;
+		int playNoteIndex = noteIndexMin + noteIndex % numNotesPerSet;
 
 		// temp!!
-		playNoteIndex = 0;
+		//playNoteIndex = 0;
 
 		audio.clip = notes [playNoteIndex];
 		audio.Play ();
