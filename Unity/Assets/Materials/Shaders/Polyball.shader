@@ -1,12 +1,20 @@
 ﻿ Shader "Custom/Polyball" {
+ 
+  Properties {
+  	uDayCoeff ("uDayCoeff", float) = 0.0
+ }
         SubShader {
             Pass {
             	Cull Off
 
     CGPROGRAM
+    
+     
 
     #pragma vertex vert
     #pragma fragment frag
+    
+     uniform float uDayCoeff;
     
     // vertex input
     struct appdata {
@@ -51,7 +59,12 @@
     		
     	//clip( sin(i.worldPos.y * 20.0) );
     	//return float4( i.uv.xy, 0.0, 1.0);
-        return float4 (i.color, 1);
+    	float3 finalColor = i.color;
+    	float3 finalColorInv = float3(1.0,1.0,1.0)-finalColor;
+    	
+    	finalColor = finalColor + ( finalColorInv-finalColor ) * saturate(uDayCoeff) * 0.9;
+    	
+        return float4 (finalColor, 1);
     }
     ENDCG
 
