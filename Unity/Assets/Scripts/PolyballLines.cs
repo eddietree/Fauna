@@ -8,6 +8,14 @@ public class PolyballLines : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		CreateMesh ();
+
+		transform.localScale = new Vector3 (1.5f, 1.5f, 1.5f);
+
+		iTween.ScaleTo (gameObject, iTween.Hash ("x",1.1f, 
+		                                         "y",1.1f, 
+		                                         "z",1.1f,
+		                                         "time",1.5f, 
+		                                         "easetype", iTween.EaseType.easeOutElastic));
 	}
 
 	void CreateMesh() {
