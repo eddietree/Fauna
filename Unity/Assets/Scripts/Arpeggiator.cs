@@ -26,9 +26,11 @@ public class Arpeggiator : MonoBehaviour {
 		Color lightColorNight = new Color( 140.0f/255.0f, 143.0f/255.0f, 180.0f/255.0f );
 		light.color = Color.Lerp (lightColorDay, lightColorNight, nightCoeff);
 
+		GameObject polyBall = GameObject.Find ("Polyball");
+		GameObject polyBallLines = GameObject.Find ("PolyballLines");
 
-		GameObject.Find ("Polyball").gameObject.renderer.material.SetFloat ("uDayCoeff", nightCoeff);
-		GameObject.Find ("PolyballLines").gameObject.renderer.material.SetFloat ("uDayCoeff", nightCoeff);
+		if (polyBall != null ) polyBall.gameObject.renderer.material.SetFloat ("uDayCoeff", nightCoeff);
+		if (polyBallLines != null ) polyBallLines.gameObject.renderer.material.SetFloat ("uDayCoeff", nightCoeff);
 
 			//GameObject.Find ("Katamari/PolyballLines").gameObject.GetComponent<PolyballLines> ().OnClick ();
 	}
