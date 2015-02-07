@@ -78,7 +78,6 @@ public class PolyballLines : MonoBehaviour {
 	}
 
 	public void OnClick() {
-		print ("CLICK");
 		StartCoroutine(Pulsate());
 	}
 
