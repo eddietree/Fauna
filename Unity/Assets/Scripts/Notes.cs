@@ -36,6 +36,7 @@ public class Notes : MonoBehaviour {
 		if (timeNoteCooldown < 0.0f) {
 			timeNoteCooldown = timeNoteCooldownMax;
 
+			PlayNote();
 			noteIndex +=1;
 
 			if ( noteIndex >= notesPerDayCycle )
@@ -65,7 +66,9 @@ public class Notes : MonoBehaviour {
 		// temp!!
 		playNoteIndex = 0;
 
-		AudioSource.PlayClipAtPoint( notes[playNoteIndex], Vector3.one );
+		audio.clip = notes [playNoteIndex];
+		audio.Play ();
+		//AudioSource.PlayClipAtPoint( notes[playNoteIndex], Vector3.one );
 
 	}
 

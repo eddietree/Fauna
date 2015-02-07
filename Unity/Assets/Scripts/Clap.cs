@@ -23,7 +23,6 @@ public class Clap : MonoBehaviour {
 		audio.Play ();
 
 		StartCoroutine (Punch ());
-
 	}
 
 	IEnumerator Punch()
