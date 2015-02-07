@@ -30,7 +30,7 @@
          {
          	float dayCoeff = saturate(uDayCoeff);
          	
-            return float4(1.0-dayCoeff*0.9,1.0-dayCoeff*0.9,1.0-dayCoeff*0.9, lerp(0.3, 1.0, dayCoeff)); 
+            return float4(1.0-dayCoeff*0.9,1.0-dayCoeff*0.9,1.0-dayCoeff*0.9, lerp(0.3, 0.9, dayCoeff)); 
                // the fourth component (alpha) is important: 
                // this is semitransparent green
          }
