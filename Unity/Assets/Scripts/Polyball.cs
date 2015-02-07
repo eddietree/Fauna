@@ -86,7 +86,7 @@ public class Polyball : MonoBehaviour {
 		iTween.Stop (gameObject);
 		yield return new WaitForSeconds(0.01f);
 
-		transform.localScale = Vector3.one * 1.3f;
+		transform.localScale = Vector3.one * 1.05f;
 
 
 		iTween.ScaleTo (gameObject, iTween.Hash ("x",1.0f, 

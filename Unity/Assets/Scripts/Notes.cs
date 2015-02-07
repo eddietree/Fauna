@@ -70,6 +70,11 @@ public class Notes : MonoBehaviour {
 		audio.Play ();
 		//AudioSource.PlayClipAtPoint( notes[playNoteIndex], Vector3.one );
 
+
+		GameObject.Find ("Katamari/Polyball").gameObject.GetComponent<Polyball> ().OnClick ();
+		GameObject.Find ("Katamari/PolyballLines").gameObject.GetComponent<PolyballLines> ().OnClick ();
+
+
 	}
 
 	void OnChangeDay( bool isDay )

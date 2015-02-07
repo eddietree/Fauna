@@ -71,7 +71,7 @@ public class InputRotator : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-		DoKick ();
+		//DoKick ();
 	}
 
 	void DoKick() 
