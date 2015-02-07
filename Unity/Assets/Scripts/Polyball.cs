@@ -74,12 +74,28 @@ public class Polyball : MonoBehaviour {
 	}
 
 	void Update() {
-		transform.localScale = Vector3.Lerp (transform.localScale, Vector3.one, 0.1f);
+		//transform.localScale = Vector3.Lerp (transform.localScale, Vector3.one, 0.1f);
 	}
 
 	public void OnClick() {
+		StartCoroutine(Pulsate());
+	}
 
-		transform.localScale *= 1.5f;
+	IEnumerator Pulsate() {
+
+		iTween.Stop (gameObject);
+		yield return new WaitForSeconds(0.01f);
+
+		transform.localScale = Vector3.one * 1.3f;
+
+
+		iTween.ScaleTo (gameObject, iTween.Hash ("x",1.0f, 
+		                                         "y",1.0f, 
+		                                         "z",1.0f,
+		                                         "time",1.1f, 
+		                                         "easetype", iTween.EaseType.easeOutElastic));
+
+		//iTween.PunchScale (gameObject, Vector3.one * 1.3f, 1.1f);
 	}
 
 	// Use this for initialization

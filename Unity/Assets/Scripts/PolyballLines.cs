@@ -76,4 +76,23 @@ public class PolyballLines : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	public void OnClick() {
+		StartCoroutine(Pulsate());
+	}
+
+	IEnumerator Pulsate() {
+		
+		iTween.Stop (gameObject);
+		yield return new WaitForSeconds (0.01f);
+		
+		transform.localScale = Vector3.one * 0.7f;
+		
+		
+		iTween.ScaleTo (gameObject, iTween.Hash ("x", 1.1f, 
+		                                         "y", 1.1f, 
+		                                         "z", 1.1f,
+		                                         "time", 1.0f, 
+		                                         "easetype", iTween.EaseType.easeOutElastic));
+	}
 }

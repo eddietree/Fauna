@@ -69,6 +69,8 @@ public class InputRotator : MonoBehaviour {
 
 		GameObject polyball = transform.FindChild ("Polyball").gameObject;
 		polyball.GetComponent<Polyball>().OnClick ();
+
+		GameObject.Find ("Katamari/PolyballLines").gameObject.GetComponent<PolyballLines> ().OnClick ();
 	}
 
 	void OnTouchStart( Vector2 aPos ) {
