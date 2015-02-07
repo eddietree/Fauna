@@ -7,7 +7,6 @@ public class Notes : MonoBehaviour {
 	public InputRotator rotator;
 
 	private int noteIndex;
-	private int numNotesPerSet;
 	private int notesPerDayCycle;
 
 	private bool isDay;
@@ -19,7 +18,6 @@ public class Notes : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		noteIndex = 0;
-		numNotesPerSet = notes.Length / 2;
 		isDay = true;
 		notesPerDayCycle = 8;
 
@@ -47,9 +45,28 @@ public class Notes : MonoBehaviour {
 				noteIndex = 0;
 			}
 
-			// temp
-			AudioSource.PlayClipAtPoint( notes[0], Vector3.one );
 		}
+	}
+
+	void PlayNote()
+	{
+		int numNotesPerSet = notes.Length / 2;
+		int indexOffset = isDay ? 0 : numNotesPerSet;
+
+		int noteIndexMin = indexOffset;
+		int noteIndexMax = noteIndexMin + numNotesPerSet;
+
+		// random
+		int playNoteIndex = Random.Range (noteIndexMin, noteIndexMax);
+
+		// linear!
+		//int playNoteIndex = noteIndexMin + noteIndex % numNotesPerSet;
+
+		// temp!!
+		playNoteIndex = 0;
+
+		AudioSource.PlayClipAtPoint( notes[playNoteIndex], Vector3.one );
+
 	}
 
 	void OnChangeDay( bool isDay )
