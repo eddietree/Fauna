@@ -6,15 +6,20 @@ public class Arpeggiator : MonoBehaviour {
 	public Camera camera;
 	public Light light;
 	public float nightCoeff;
+	private float goalNightCoeff;
+
 	public InputRotator inputRotator;
 
 	// Use this for initialization
 	void Start () {
 		nightCoeff = 0.0f;	
+		goalNightCoeff = nightCoeff;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		nightCoeff = Mathf.Lerp (nightCoeff, goalNightCoeff, 0.06f);
 
 		// bg color
 		Color colorDay = new Color( 243.0f/255.0f, 233.0f/255.0f, 93.0f/255.0f );
@@ -33,5 +38,10 @@ public class Arpeggiator : MonoBehaviour {
 		if (polyBallLines != null ) polyBallLines.gameObject.renderer.material.SetFloat ("uDayCoeff", nightCoeff);
 
 			//GameObject.Find ("Katamari/PolyballLines").gameObject.GetComponent<PolyballLines> ().OnClick ();
+	}
+
+	public void ChangeDay( bool day )
+	{
+		goalNightCoeff = day ? 0.0f : 1.0f;
 	}
 }
