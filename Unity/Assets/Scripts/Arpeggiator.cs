@@ -28,6 +28,7 @@ public class Arpeggiator : MonoBehaviour {
 
 
 		GameObject.Find ("Polyball").gameObject.renderer.material.SetFloat ("uDayCoeff", nightCoeff);
+		GameObject.Find ("PolyballLines").gameObject.renderer.material.SetFloat ("uDayCoeff", nightCoeff);
 
 			//GameObject.Find ("Katamari/PolyballLines").gameObject.GetComponent<PolyballLines> ().OnClick ();
 	}

@@ -13,6 +13,8 @@ public class InputRotator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+		if (Input.GetKeyDown (KeyCode.Space))
+			DoKick ();
 	}
 	
 	void HandleRotationInput()
@@ -65,11 +67,16 @@ public class InputRotator : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-		audio.Play ();
+		DoKick ();
+	}
 
+	void DoKick() 
+	{
+		audio.Play ();
+		
 		GameObject polyball = transform.FindChild ("Polyball").gameObject;
 		polyball.GetComponent<Polyball>().OnClick ();
-
+		
 		GameObject.Find ("Katamari/PolyballLines").gameObject.GetComponent<PolyballLines> ().OnClick ();
 	}
 

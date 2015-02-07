@@ -1,4 +1,9 @@
 ﻿Shader "Cg shader using blending" {
+
+  Properties {
+  	uDayCoeff ("uDayCoeff", float) = 0.0
+ }
+ 
    SubShader {
       Tags { "Queue" = "Transparent" } 
          // draw after all opaque geometry has been drawn
@@ -13,6 +18,8 @@
  
          #pragma vertex vert 
          #pragma fragment frag
+         
+         uniform float uDayCoeff;
  
          float4 vert(float4 vertexPos : POSITION) : SV_POSITION 
          {
@@ -21,7 +28,9 @@
  
          float4 frag(void) : COLOR 
          {
-            return float4(1.0, 1.0, 1.0, 0.3); 
+         	float dayCoeff = saturate(uDayCoeff);
+         	
+            return float4(1.0-dayCoeff*0.9,1.0-dayCoeff*0.9,1.0-dayCoeff*0.9, lerp(0.3, 1.0, dayCoeff)); 
                // the fourth component (alpha) is important: 
                // this is semitransparent green
          }
