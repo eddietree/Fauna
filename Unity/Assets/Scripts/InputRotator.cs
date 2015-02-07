@@ -4,10 +4,12 @@ using System.Collections;
 public class InputRotator : MonoBehaviour {
 
 	private Vector2 mousePosPrev;
+	private Vector3 startPos;
 
 	// Use this for initialization
 	void Start () {
 		mousePosPrev = new Vector2 (0.0f, 0.0f);
+		startPos = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -15,6 +17,8 @@ public class InputRotator : MonoBehaviour {
 	
 		if (Input.GetKeyDown (KeyCode.Space))
 			DoKick ();
+
+		transform.position = startPos;
 	}
 	
 	void HandleRotationInput()
@@ -100,7 +104,10 @@ public class InputRotator : MonoBehaviour {
 	}
 	
 	void OnTouchMove( Vector2 aPos, Vector2 aRelativePos ) {
-		
+
+		if (rigidbody.isKinematic)
+			return;
+
 		Vector3 force = Vector3.right * aRelativePos.y  * Mathf.Abs(aRelativePos.y) - Vector3.up * aRelativePos.x* Mathf.Abs (aRelativePos.x);
 
 		//transform.ro

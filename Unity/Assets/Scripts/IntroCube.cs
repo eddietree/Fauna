@@ -22,12 +22,23 @@ public class IntroCube : MonoBehaviour {
 
 		if (!clicked) {
 			clicked = true;
-			iTween.MoveTo (gameObject, new Vector3 (0.0f, 5.0f, 0.0f), 1.5f);
 
-			katamari.SetActive(true);
-			audio.Play ();
+			StartCoroutine(Reveal());
 
-			iTween.PunchScale( katamari, Vector3.one*0.5f, 1.5f );
 		}
 	}
+
+	IEnumerator Reveal() {
+		
+		iTween.MoveTo (gameObject, new Vector3 (0.0f, 5.0f, 0.0f), 1.5f);
+		
+		katamari.SetActive(true);
+		audio.Play ();
+		
+		iTween.PunchScale( katamari, Vector3.one*0.5f, 1.5f );
+
+		yield return new WaitForSeconds(1.0f);
+		//katamari.rigidbody.isKinematic = false;
+	}
+
 }
