@@ -5,6 +5,7 @@ public class Notes : MonoBehaviour {
 
 	public AudioClip[] notes;
 	public InputRotator rotator;
+	public Camera camera;
 
 	private int noteIndex;
 	private int notesPerDayCycle;
@@ -72,7 +73,13 @@ public class Notes : MonoBehaviour {
 
 		//audio.clip = notes [playNoteIndex];
 		//audio.Play ();
-		AudioSource.PlayClipAtPoint( notes[playNoteIndex], Vector3.zero );
+
+		Vector3 camPos = camera.transform.position;
+		Vector3 soundDir = rotator.transform.forward;
+		float time = Time.time * 3.0f;
+		//Vector3 soundPos = camPos + (new Vector3 (Mathf.Cos (time), 0.0f, Mathf.Sin (time))) * 2.0f;
+		Vector3 soundPos = camPos + soundDir * 2.0f;
+		AudioSource.PlayClipAtPoint( notes[playNoteIndex], soundPos );
 
 
 		GameObject.Find ("Katamari/Polyball").gameObject.GetComponent<Polyball> ().OnClick ();
