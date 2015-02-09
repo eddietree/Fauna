@@ -21,7 +21,7 @@ public class Notes : MonoBehaviour {
 		isDay = true;
 		notesPerDayCycle = 16;
 
-		timeNoteCooldownMax = 2.0f;
+		timeNoteCooldownMax = 1.75f;
 
 		arp = GetComponent<Arpeggiator> ();
 	}
@@ -63,12 +63,16 @@ public class Notes : MonoBehaviour {
 		// linear!
 		int playNoteIndex = noteIndexMin + noteIndex % numNotesPerSet;
 
+
+		// reverse for night
+		//if (!isDay)	playNoteIndex = noteIndexMin + (noteIndexMax-playNoteIndex) - 1;
+
 		// temp!!
 		//playNoteIndex = 0;
 
-		audio.clip = notes [playNoteIndex];
-		audio.Play ();
-		//AudioSource.PlayClipAtPoint( notes[playNoteIndex], Vector3.one );
+		//audio.clip = notes [playNoteIndex];
+		//audio.Play ();
+		AudioSource.PlayClipAtPoint( notes[playNoteIndex], Vector3.zero );
 
 
 		GameObject.Find ("Katamari/Polyball").gameObject.GetComponent<Polyball> ().OnClick ();
