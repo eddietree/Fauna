@@ -69,6 +69,7 @@ public class InputRotator : MonoBehaviour {
 		HandleRotationInput ();
 
 		rigidbody.angularVelocity = Vector3.Lerp (rigidbody.angularVelocity, goalRotationalVel, 0.05f);
+		goalRotationalVel = Vector3.Lerp (goalRotationalVel, Vector3.zero, 0.01f);
 	}
 
 	void OnMouseDown() {
@@ -87,7 +88,7 @@ public class InputRotator : MonoBehaviour {
 
 	void OnTouchStart( Vector2 aPos ) {
 
-		goalRotationalVel = Vector3.zero;
+		//goalRotationalVel = Vector3.zero;
 	}
 	
 	void OnTouchEnd( Vector2 aPos, Vector2 aRelativePos ) {
@@ -102,6 +103,5 @@ public class InputRotator : MonoBehaviour {
 
 		Vector3 force = Vector3.right * aRelativePos.y  * Mathf.Abs(aRelativePos.y) - Vector3.up * aRelativePos.x* Mathf.Abs (aRelativePos.x);
 		goalRotationalVel = force * 30.0f;
-
 	}
 }
