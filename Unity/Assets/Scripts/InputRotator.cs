@@ -6,6 +6,8 @@ public class InputRotator : MonoBehaviour {
 	private Vector2 mousePosPrev;
 	private Vector3 startPos;
 
+	private Vector3 goalRotationalVel;
+
 	// Use this for initialization
 	void Start () {
 		mousePosPrev = new Vector2 (0.0f, 0.0f);
@@ -66,8 +68,7 @@ public class InputRotator : MonoBehaviour {
 	void FixedUpdate () {
 		HandleRotationInput ();
 
-		
-		//print (rigidbody.angularVelocity.magnitude);
+		rigidbody.angularVelocity = Vector3.Lerp (rigidbody.angularVelocity, goalRotationalVel, 0.05f);
 	}
 
 	void OnMouseDown() {
@@ -85,22 +86,13 @@ public class InputRotator : MonoBehaviour {
 	}
 
 	void OnTouchStart( Vector2 aPos ) {
-		//rigidbody.angularVelocity = Vector3.zero;
-		rigidbody.angularDrag = 10.0f;
+
+		goalRotationalVel = Vector3.zero;
 	}
 	
 	void OnTouchEnd( Vector2 aPos, Vector2 aRelativePos ) {
-
-		rigidbody.angularDrag = 0.01f;
-
-		Vector3 force = Vector3.right * aRelativePos.y - Vector3.up * aRelativePos.x;
-		
-		//transform.ro
-		//rigidbody.rotation
-		float speed = 600.0f;
-		rigidbody.AddTorque( force * speed );
-
-		//rigidbody.angularVelocity *= 50.0f;
+		//goalRotationalVel = Vector3.zero;
+		return;
 	}
 	
 	void OnTouchMove( Vector2 aPos, Vector2 aRelativePos ) {
@@ -109,16 +101,7 @@ public class InputRotator : MonoBehaviour {
 			return;
 
 		Vector3 force = Vector3.right * aRelativePos.y  * Mathf.Abs(aRelativePos.y) - Vector3.up * aRelativePos.x* Mathf.Abs (aRelativePos.x);
+		goalRotationalVel = force * 30.0f;
 
-		//transform.ro
-		//rigidbody.rotation
-		float speed = 400.0f;
-		rigidbody.AddTorque( force * speed );
-
-		//transform.Rotate
-		rigidbody.angularVelocity *= 0.98f;
-		rigidbody.angularDrag = Mathf.Lerp( rigidbody.angularDrag, 1.0f, 0.1f );
-
-//		transform.Rotate ( new Vector3(aRelativePos.y, aRelativePos.x,0.0f));
 	}
 }
